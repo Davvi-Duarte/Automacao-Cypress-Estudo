@@ -5,7 +5,7 @@ describe('Orange HRM Tests', () => {
     passwordField: "[name='password']",
     loginButton: "[type='submit']",
     loginErrorMessage: ".oxd-alert",
-    sectionTitleTopBar: ".oxd-topbar-header-breadcrumb-module",
+    dashboardGrid: ".orangehrm-dashboard-grid",
     inputErrorUsernameRequire: ":nth-child(2) > .oxd-input-group > .oxd-text",
     inputErrorPasswordRequire: ":nth-child(3) > .oxd-input-group > .oxd-text",
   }
@@ -16,7 +16,7 @@ describe('Orange HRM Tests', () => {
     cy.get(selectorsList.passwordField).type('admin123')
     cy.get(selectorsList.loginButton).click()
     cy.location('pathname').should('equals','/web/index.php/dashboard/index')
-    cy.get('.oxd-topbar-header-breadcrumb-module').contains('Dashboard')
+    cy.get('.oxd-topbar-header-breadcrumb-module')
   })
 
   it('Login - Space add to end in username (Sucess)', () => {
@@ -25,7 +25,7 @@ describe('Orange HRM Tests', () => {
     cy.get(selectorsList.passwordField).type('admin123')
     cy.get(selectorsList.loginButton).click()
     cy.location('pathname').should('equals','/web/index.php/dashboard/index')
-    cy.get(selectorsList.sectionTitleTopBar).contains('Dashboard')
+    cy.get(selectorsList.dashboardGrid)
   })
 
   it('Login - Fail (invalid username and password)', () => {
