@@ -13,7 +13,7 @@ describe('Orange HRM Tests', () => {
   }
 
   it('Login - Sucess', () => {
-    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.visit('/auth/login')
     cy.get(selectorsList.usernameField).type(userData.userSucess.username)
     cy.get(selectorsList.passwordField).type(userData.userSucess.password)
     cy.get(selectorsList.loginButton).click()
@@ -22,7 +22,7 @@ describe('Orange HRM Tests', () => {
   })
 
   it('Login - Space add to end in username (Sucess)', () => {
-    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.visit('/auth/login')
     cy.get(selectorsList.usernameField).type(userData.userSucess.username + ' ')
     cy.get(selectorsList.passwordField).type(userData.userSucess.password)
     cy.get(selectorsList.loginButton).click()
@@ -31,7 +31,7 @@ describe('Orange HRM Tests', () => {
   })
 
   it('Login - Fail (invalid username and password)', () => {
-    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.visit('/auth/login')
     cy.get(selectorsList.usernameField).type(userData.userFail.username)
     cy.get(selectorsList.passwordField).type(userData.userFail.password)
     cy.get(selectorsList.loginButton).click()
@@ -40,7 +40,7 @@ describe('Orange HRM Tests', () => {
   })
 
   it('Login - Fail (invalid username)', () => {
-    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.visit('/auth/login')
     cy.get(selectorsList.usernameField).type(userData.userFail.username)
     cy.get(selectorsList.passwordField).type(userData.userSucess.password)
     cy.get(selectorsList.loginButton).click()
@@ -49,7 +49,7 @@ describe('Orange HRM Tests', () => {
   })
   
   it('Login - Fail (invalid password)', () => {
-    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.visit('/auth/login')
     cy.get(selectorsList.usernameField).type(userData.userSucess.username)
     cy.get(selectorsList.passwordField).type(userData.userFail.password)
     cy.get(selectorsList.loginButton).click()
@@ -58,11 +58,11 @@ describe('Orange HRM Tests', () => {
   })
 
   it('Login - Fail (empty username and password fields)', () => {
-    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    cy.visit('/auth/login')
     cy.get(selectorsList.loginButton).click()
     cy.get(selectorsList.inputErrorUsernameRequire).should('be.visible')
     cy.get(selectorsList.inputErrorPasswordRequire).should('be.visible')
     cy.location('pathname').should('equals','/web/index.php/auth/login')
   })
-  
+
 })
