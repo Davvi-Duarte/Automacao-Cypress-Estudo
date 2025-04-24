@@ -4,22 +4,23 @@ describe( "Orange HRM Tests - User E2E", () => {
 
     const selectorsList = {
         usernameField: "[name='username']",
+        passwordField: "[name='password']",
+        dashboardGrid: ".orangehrm-dashboard-grid",
+        loginButton: "[type='submit']",
+        
         firstnameField: "[name='firstName']",
         middlenameField: "[name='middleName']",
         lastnameField: "[name='lastName']",
-        passwordField: "[name='password']",
         genericInputField: ".oxd-input--active",
-        loginButton: "[type='submit']",
-        loginErrorMessage: ".oxd-alert",
-        dashboardGrid: ".orangehrm-dashboard-grid",
-        inputErrorUsernameRequire: ":nth-child(2) > .oxd-input-group > .oxd-text",
-        inputErrorPasswordRequire: ":nth-child(3) > .oxd-input-group > .oxd-text",
         myInfoButtonSideBar: "[href='/web/index.php/pim/viewMyDetails']",
         employeeContentGrid: ".orangehrm-edit-employee",
         dateField: "[placeholder='yyyy-mm-dd']",
         womanRadioButton: ":nth-child(2) > :nth-child(2) > .oxd-radio-wrapper > label > .oxd-radio-input",
         maleRadioButton: ":nth-child(1) > :nth-child(2) > .oxd-radio-wrapper > label > .oxd-radio-input",
         submitButton: "[type='submit']",
+        genericComboBox: ".oxd-select-text--arrow",
+        itemComboBox2: ".oxd-select-dropdown > :nth-child(2)",
+        itemComboBox15: ".oxd-select-dropdown > :nth-child(15)"
     }
 
     it('Information update', () => {
@@ -38,8 +39,13 @@ describe( "Orange HRM Tests - User E2E", () => {
         cy.get('.--close').click()
         cy.get(selectorsList.genericInputField).eq(8).clear().type('Test Field')
         cy.get(selectorsList.womanRadioButton).click()
-        cy.get(selectorsList.submitButton).eq(0).click()
+        cy.get(selectorsList.genericComboBox).eq(0).click({force: true})        
+        cy.get(selectorsList.itemComboBox15).click()
+        cy.get(selectorsList.genericComboBox).eq(1).click({force: true})
+        cy.get(selectorsList.itemComboBox2).click()
+        cy.get(selectorsList.submitButton).eq(0).click({force: true})
         cy.get('body').should('contain', 'Successfully Updated')
         cy.get('.oxd-toast-close')
-    })
+        
+    })  
 })
