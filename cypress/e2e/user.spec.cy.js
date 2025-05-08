@@ -1,18 +1,20 @@
 import userData from '../fixtures/users/user-data.json'
+import LoginPage from '../pages/loginPage.js'
+import DashboardPage from '../pages/dashboardPage.js';
+import MenuPage from '../pages/menuPage.js';
+
+const loginPageObj = new LoginPage();
+const dashboardPageObj = new DashboardPage();
+const menuPageObj = new MenuPage();
 
 describe( "Orange HRM Tests - User E2E", () => {
 
     const selectorsList = {
-        usernameField: "[name='username']",
-        passwordField: "[name='password']",
-        dashboardGrid: ".orangehrm-dashboard-grid",
-        loginButton: "[type='submit']",
-        
+    
         firstnameField: "[name='firstName']",
         middlenameField: "[name='middleName']",
         lastnameField: "[name='lastName']",
         genericInputField: ".oxd-input--active",
-        myInfoButtonSideBar: "[href='/web/index.php/pim/viewMyDetails']",
         employeeContentGrid: ".orangehrm-edit-employee",
         dateField: "[placeholder='yyyy-mm-dd']",
         womanRadioButton: ":nth-child(2) > :nth-child(2) > .oxd-radio-wrapper > label > .oxd-radio-input",
@@ -20,12 +22,57 @@ describe( "Orange HRM Tests - User E2E", () => {
         submitButton: "[type='submit']",
         genericComboBox: ".oxd-select-text--arrow",
         itemComboBox2: ".oxd-select-dropdown > :nth-child(2)",
-        itemComboBox15: ".oxd-select-dropdown > :nth-child(15)"
+        itemComboBox15: ".oxd-select-dropdown > :nth-child(15)",
+        
     }
 
+    it('Login - Sucess', () => {
+        loginPageObj.accessLoginPage()
+        loginPageObj.loginWithAnyUser(userData.userSucess.username, userData.userSucess.password)
+        dashboardPageObj.checkDashboardPage()
+    })
+
+    it('Login - Space add to end in username (Fail)', () => {
+        loginPageObj.accessLoginPage()
+        loginPageObj.loginWithAnyUser(userData.userSucess.username + ' ', userData.userSucess.password)
+        cy.get(loginPageObj.selectorsList().loginErrorMessage).should('be.visible')
+        cy.location('pathname').should('equals','/web/index.php/auth/login')
+    })
+
+    it('Login - Fail (invalid username and password)', () => {
+        loginPageObj.accessLoginPage()
+        loginPageObj.loginWithAnyUser(userData.userFail.username, userData.userFail.password)
+        cy.get(loginPageObj.selectorsList().loginErrorMessage).should('be.visible')
+        cy.location('pathname').should('equals','/web/index.php/auth/login')
+    })
+
+    it('Login - Fail (invalid username)', () => {
+        loginPageObj.accessLoginPage()
+        loginPageObj.loginWithAnyUser(userData.userFail.username, userData.userSucess.password)
+        cy.get(loginPageObj.selectorsList().loginErrorMessage).should('be.visible')
+        cy.location('pathname').should('equals','/web/index.php/auth/login')
+    })
+    
+    it('Login - Fail (invalid password)', () => {
+        loginPageObj.accessLoginPage()
+        loginPageObj.loginWithAnyUser(userData.userSucess.username, userData.userFail.password)
+        cy.get(loginPageObj.selectorsList().loginErrorMessage).should('be.visible')
+        cy.location('pathname').should('equals','/web/index.php/auth/login')
+    })
+
+    it('Login - Fail (empty username and password fields)', () => {
+      loginPageObj.accessLoginPage()
+      cy.get(loginPageObj.selectorsList().loginButton).click()
+      cy.get(loginPageObj.selectorsList().inputErrorUsernameRequire).should('be.visible')
+      cy.get(loginPageObj.selectorsList().inputErrorPasswordRequire).should('be.visible')
+      cy.location('pathname').should('equals','/web/index.php/auth/login')
+    })
+
     it('Information update', () => {
-        cy.login_sucess(userData.userSucess.username, userData.userSucess.password, selectorsList.usernameField, selectorsList.passwordField, selectorsList.loginButton, selectorsList.dashboardGrid)
-        cy.get(selectorsList.myInfoButtonSideBar).click()
+        loginPageObj.accessLoginPage()
+        loginPageObj.loginWithAnyUser(userData.userSucess.username, userData.userSucess.password)
+        dashboardPageObj.checkDashboardPage()
+        menuPageObj.AcessMyInfo()
         cy.get(selectorsList.employeeContentGrid).should('be.visible')
         cy.get(selectorsList.firstnameField).clear().type('Sr')
         cy.get(selectorsList.middlenameField).clear().type('Testing')
