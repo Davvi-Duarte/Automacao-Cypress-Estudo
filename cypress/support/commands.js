@@ -23,11 +23,3 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('login_sucess', (username, password, usernameField, passwordField, submitButton, dashboardGrid) => {
-    cy.visit('/auth/login')
-    cy.get(usernameField).type(username)
-    cy.get(passwordField).type(password)
-    cy.get(submitButton).click()
-    cy.get(dashboardGrid).should('be.visible')
-
-})
