@@ -1,14 +1,25 @@
 class LoginPage {
     selectorsList () {
-        return{
+        const selectors = {
             usernameField: "[name='username']",
             passwordField: "[name='password']",
             loginButton: "[type='submit']",
             loginErrorMessage: ".oxd-alert",
-            dashboardGrid: ".orangehrm-dashboard-grid",
             inputErrorUsernameRequire: ":nth-child(2) > .oxd-input-group > .oxd-text",
             inputErrorPasswordRequire: ":nth-child(3) > .oxd-input-group > .oxd-text"
         }
-    
-      }
+        return selectors
+    }
+
+    accessLoginPage () {
+        cy.visit('/auth/login')
+    }
+
+    loginWithAnyUser(username, password) {
+        cy.get(this.selectorsList().usernameField).type(username)
+        cy.get(this.selectorsList().passwordField).type(password)
+        cy.get(this.selectorsList().loginButton).click()
+    }
 }
+
+export default LoginPage
