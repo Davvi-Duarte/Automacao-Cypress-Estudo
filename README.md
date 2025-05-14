@@ -1,16 +1,23 @@
-# Estudos de Cypress e Automação de Testes
+# My Cypress Automation
 
-Este repositório contém meus estudos e exemplos sobre automação de testes utilizando o **Cypress**. O objetivo é aprender e compartilhar boas práticas para a criação de testes automatizados em aplicações web, garantindo a qualidade e eficiência no processo de desenvolvimento.
+This project uses Cypress to automate testing of a login feature and a user informations update feature.  
+Cypress is a JavaScript-based end-to-end testing framework that allows developers to write and execute tests in a real browser.
 
-## Objetivo
+## 📦 Installation
 
-O foco principal deste repositório é:
-- Aprender como utilizar o Cypress para automação de testes de front-end.
-- Estudar as melhores práticas e técnicas para escrever testes robustos e eficientes.
+```bash
+npm install
+```
 
+> **NOTE:**  
+> Node.js must be installed.
 
-## Tecnologias Utilizadas
+## 🚀 Running
 
-- **Cypress**: Ferramenta de automação de testes para aplicações web.
-- **Node.js**: Ambiente para executar o Cypress e gerenciar dependências.
+```bash
+# Open the Cypress UI
+npx cypress open
 
+# Run the tests via command line
+npx cypress run
+```
