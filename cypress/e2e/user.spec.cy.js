@@ -5,6 +5,7 @@ import MenuPage from '../pages/menuPage.js';
 import MyInfoPage from '../pages/myInfoPage.js';
 
 const Chance = require('chance')
+//test
 
 const chance = new Chance()
 const loginPageObj = new LoginPage()
